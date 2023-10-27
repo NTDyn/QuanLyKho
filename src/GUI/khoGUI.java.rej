@@ -1,0 +1,17 @@
+diff a/src/GUI/khoGUI.java b/src/GUI/khoGUI.java	(rejected hunks)
+@@ -62,13 +62,13 @@
+         jComboBoxLuaChon3 = new javax.swing.JComboBox<>();
+         jTextFieldSearch3 = new javax.swing.JTextField();
+         btnLamMoi3 = new javax.swing.JButton();
+-        jScrollPane4 = new javax.swing.JScrollPane();
++        jPanel8 = new javax.swing.JPanel();
++        jScrollPane5 = new javax.swing.JScrollPane();
+         tbKho = new javax.swing.JTable();
+ 
+         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+ 
+         jInternalFrame1.setBorder(null);
+-        jInternalFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+ 
+         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+ 
