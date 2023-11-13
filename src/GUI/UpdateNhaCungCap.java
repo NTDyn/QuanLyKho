@@ -5,6 +5,7 @@
 package GUI;
 
 
+import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
 import com.formdev.flatlaf.FlatLightLaf;
 import DAO.NhaCungCapDAO;
@@ -22,6 +23,7 @@ public class UpdateNhaCungCap extends javax.swing.JDialog {
     /**
      * Creates new form AddAccount
      */
+    NhaCungCapBUS nccBUS = new NhaCungCapBUS();
     private NhaCungCapForm parent;
     public UpdateNhaCungCap(javax.swing.JInternalFrame parent,javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
@@ -162,6 +164,11 @@ public class UpdateNhaCungCap extends javax.swing.JDialog {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
         try {
+            NhaCungCapDTO ncc = new NhaCungCapDTO();
+            ncc.setMaNhaCungCap(Integer.parseInt(txtMaNCC.getText()));
+            ncc.setTenNhaCungCap(txtTenNCC.getText());
+            ncc.setSdt(txtSDT.getText());
+            ncc.setDiaChi(txtDiaChi.getText());
             String tenNcc = txtTenNCC.getText().trim();
             String sdtNcc = txtSDT.getText().trim();
             String diachiNcc = txtDiaChi.getText().trim();
@@ -171,22 +178,19 @@ public class UpdateNhaCungCap extends javax.swing.JDialog {
             else if(!sdtNcc.matches("\\d{10}") ){
                 JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             }
-        
-            else{
-            // TODO add your handling code here:
-            NhaCungCapDTO ncc = new NhaCungCapDTO();
-            ncc.setMaNhaCungCap(Integer.parseInt(txtMaNCC.getText()));
-            ncc.setTenNhaCungCap(txtTenNCC.getText());
-            ncc.setSdt(txtSDT.getText());
-            ncc.setDiaChi(txtDiaChi.getText());
-            NhaCungCapDAO nccDao = new NhaCungCapDAO();
-            nccDao.update(ncc);
-            this.dispose();
-            JOptionPane.showMessageDialog(this, "Sửa thành công !");    
-            parent.loadDataToTable();
+            else if(NhaCungCapDAO.getInstance().hasSDTException(ncc)){
+                JOptionPane.showMessageDialog(this, "Số điện thoại bị trùng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            }
+            else if(NhaCungCapDAO.getInstance().hasDiaChiException(ncc)){
+                JOptionPane.showMessageDialog(this, "Địa chỉ bị trùng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            }
+            else{  
+                JOptionPane.showMessageDialog(this, nccBUS.updateNhaCungCap(ncc));
+                parent.loadDataToTable();
+                this.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Thất bại !");
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnLuuActionPerformed
 

@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BUS.ChiTietCungCapBUS;
 import DAO.ChiTietCungCapDAO;
 import DTO.ChiTietCungCapDTO;
 import DTO.SanPhamDTO;
@@ -23,7 +24,7 @@ public class UpdateChiTietCungCap extends javax.swing.JFrame {
      */
     private ChiTietCungCap parent;
     ChiTietCungCapDTO ctcc ;
-    //SanPhamDTO sp;
+    ChiTietCungCapBUS ctccBUS = new ChiTietCungCapBUS();
     public UpdateChiTietCungCap(javax.swing.JFrame parent, ChiTietCungCapDTO ct) {
         initComponents();
        this.parent = (ChiTietCungCap) parent;
@@ -33,10 +34,6 @@ public class UpdateChiTietCungCap extends javax.swing.JFrame {
         txtTenSP.setEditable(false);
     }
 
-    
-  
-   
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,6 +90,12 @@ public class UpdateChiTietCungCap extends javax.swing.JFrame {
 
         lbGia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbGia.setText("Giá nhập: ");
+
+        txtGia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtGiaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,17 +164,33 @@ public class UpdateChiTietCungCap extends javax.swing.JFrame {
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
-        ctcc.setGiaNhap(Integer.parseInt(txtGia.getText()));
-        //sp.setTenSanPham(txtTenSP.getText());
-        if(ChiTietCungCapDAO.getInstance().update(ctcc) == true){
-            JOptionPane.showMessageDialog(this, "Sửa thành công" );
-            
+        try {
+            ctcc.setGiaNhap(Integer.parseInt(txtGia.getText()));
+            String giaNhap = (txtGia.getText().trim());
+            int giaNhapValue = Integer.parseInt(giaNhap); 
+            if(giaNhapValue <= 0){
+                JOptionPane.showMessageDialog(this, "Giá nhập phải lớn hơn 0!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            JOptionPane.showMessageDialog(this, ctccBUS.updateChiTietCungCap(ctcc));
             parent.LoadDataToTable(ctcc.getMaNhaCungCap());
-        } else {
-            JOptionPane.showMessageDialog(this, "Sửa thất bại" );
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ");
         }
         
+        
+        
     }//GEN-LAST:event_btnLuuActionPerformed
+
+    private void txtGiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiaKeyPressed
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            txtGia.setEditable(false);
+        } else {
+            txtGia.setEditable(true);
+        }
+    }//GEN-LAST:event_txtGiaKeyPressed
 
     /**
      * @param args the command line arguments

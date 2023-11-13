@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BUS.ChiTietCungCapBUS;
 import BUS.SanPhamBUS;
 import DAO.ChiTietCungCapDAO;
 import DAO.SanPhamDAO;
@@ -24,11 +25,13 @@ public class AddChiTietCungCap extends javax.swing.JFrame {
      * Creates new form AddChiTietCungCap
      */
     int idNCC;
-    
-    public AddChiTietCungCap(int maNCC) {
+    private ChiTietCungCap parent;
+    ChiTietCungCapBUS ctccBUS = new ChiTietCungCapBUS();
+    public AddChiTietCungCap(int maNCC, javax.swing.JFrame parent) {
         initComponents();
         idNCC = maNCC;
         tbModel =(DefaultTableModel) tbCTCC.getModel();
+        this.parent = (ChiTietCungCap) parent;
         loadDataToTable();
     }
 
@@ -81,16 +84,16 @@ public class AddChiTietCungCap extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(83, 83, 83)
                 .addComponent(jLabel1)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(17, 17, 17))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 70));
@@ -102,6 +105,21 @@ public class AddChiTietCungCap extends javax.swing.JFrame {
 
         lbGia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbGia.setText("Giá nhập :");
+
+        txtGia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtGiaKeyPressed(evt);
+            }
+        });
+
+        txtTenSP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTenSPKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTenSPKeyReleased(evt);
+            }
+        });
 
         tbCTCC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -129,31 +147,31 @@ public class AddChiTietCungCap extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbGia, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTenSP))
+                    .addComponent(lbTenSP)
+                    .addComponent(lbGia, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 209, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(txtTenSP))
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbGia)
-                    .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbGia)
+                    .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -211,6 +229,13 @@ public class AddChiTietCungCap extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin !", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            else{
+                int giaNhapValue = Integer.parseInt(giaNhap);
+                if(giaNhapValue <= 0){
+                    JOptionPane.showMessageDialog(this, "Giá nhập không hợp lệ!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
             ChiTietCungCapDTO ct = new ChiTietCungCapDTO();
             ct.setMaNhaCungCap(idNCC);
             int row = tbCTCC.getSelectedRow();
@@ -218,16 +243,11 @@ public class AddChiTietCungCap extends javax.swing.JFrame {
             SanPhamDTO sanpham = SanPhamDAO.getInstance().selectProductByName(sp);
             ct.setMaSanPham(sanpham.getMaSanPham());
             ct.setGiaNhap(Integer.parseInt(txtGia.getText()));
-            
-            
-            if(ChiTietCungCapDAO.getInstance().insert(ct) == true){
-                JOptionPane.showMessageDialog(this, "Thêm thành công !");
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Thêm ko thành công !");
-            }
-        } catch (Exception ex) {
-            System.err.println(ex);
+            JOptionPane.showMessageDialog(this, ctccBUS.addChiTietCungCap(ct));
+            parent.LoadDataToTable(idNCC);
+            this.dispose();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Thông tin không hợp lệ");
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -240,6 +260,42 @@ public class AddChiTietCungCap extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tbCTCCMouseClicked
 
+    private void txtTenSPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenSPKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenSPKeyPressed
+
+    private void txtTenSPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenSPKeyReleased
+        // TODO add your handling code here:
+        String tenSP = txtTenSP.getText();
+        ArrayList<SanPhamDTO> result = new ArrayList<>();
+        result = ChiTietCungCapDAO.getInstance().searchTenSP(tenSP);
+        loadDataToTableSearch(result);
+    }//GEN-LAST:event_txtTenSPKeyReleased
+
+    private void txtGiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiaKeyPressed
+        // TODO add your handling code here:
+         char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            txtGia.setEditable(false);
+        } else {
+            txtGia.setEditable(true);
+        }
+    }//GEN-LAST:event_txtGiaKeyPressed
+   
+    public void loadDataToTableSearch(ArrayList<SanPhamDTO> result) {
+        try {
+            tbModel.setRowCount(0);
+            int stt = 0;
+            for (SanPhamDTO i : result) {
+                
+                tbModel.addRow(new Object[]{
+                    stt++,i.getTenSanPham()
+                });
+            }
+        } catch (Exception e) {
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

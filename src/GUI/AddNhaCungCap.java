@@ -1,30 +1,44 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ */
 package GUI;
 
+import BUS.NhaCungCapBUS;
+import DTO.NhaCungCapDTO;
 import com.formdev.flatlaf.FlatLightLaf;
 import DAO.NhaCungCapDAO;
-import DTO.NhaCungCapDTO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class AddNhaCungCap extends javax.swing.JDialog {
-    private NhaCungCapForm parent;
 
-    public AddNhaCungCap(JFrame owner, boolean modal) {
+/**
+ *
+ * @author Tran Nhat Sinh
+ */
+public class AddNhaCungCap extends javax.swing.JDialog {
+
+    /**
+     * Creates new form AddAccount
+     */
+    private NhaCungCapForm parent;
+    NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+    public AddNhaCungCap(javax.swing.JInternalFrame parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
         this.parent = (NhaCungCapForm) parent;
         initComponents();
         setLocationRelativeTo(null);
     }
 
-//    AddNhaCungCap() {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
-//
-//    private AddNhaCungCap(JFrame jFrame, boolean b) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
+    AddNhaCungCap() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private AddNhaCungCap(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,13 +169,18 @@ public class AddNhaCungCap extends javax.swing.JDialog {
             }
             else if(NhaCungCapDAO.getInstance().hasSDT(sdtNcc)){
                 JOptionPane.showMessageDialog(this, "Số điện thoại bị trùng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            } else {
+            }
+            else if(NhaCungCapDAO.getInstance().hasDiaChi(diachiNcc)){
+                JOptionPane.showMessageDialog(this, "Địa chỉ bị trùng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            }
+           else {
                     NhaCungCapDTO ncc = new NhaCungCapDTO();
                     ncc.setTenNhaCungCap(tenNcc);
                     ncc.setSdt(sdtNcc);
                     ncc.setDiaChi(diachiNcc);
-                    NhaCungCapDAO.getInstance().insert(ncc);
-                    JOptionPane.showMessageDialog(this, "Thêm thành công !");
+//                    NhaCungCapDAO.getInstance().insert(ncc);
+//                    JOptionPane.showMessageDialog(this, "Thêm thành công !");
+                    JOptionPane.showMessageDialog(this, nccBUS.addNhaCungCap(ncc));
                     parent.loadDataToTable();
                     this.dispose(); 
             }

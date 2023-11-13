@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BUS.ChiTietCungCapBUS;
 import DAO.ChiTietCungCapDAO;
 import DAO.SanPhamDAO;
 import DTO.NhaCungCapDTO;
@@ -11,6 +12,7 @@ import DTO.ChiTietCungCapDTO;
 import DTO.SanPhamDTO;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import DAO.NhaCungCapDAO;
 import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,7 +30,7 @@ public class ChiTietCungCap extends javax.swing.JFrame {
      * Creates new form QuanLiCungCap
      */
     
-
+    ChiTietCungCapBUS ctccBUS = new ChiTietCungCapBUS();
     int idNCC;
     public ChiTietCungCap(NhaCungCapDTO ncc) {
         initComponents();
@@ -78,6 +80,7 @@ public class ChiTietCungCap extends javax.swing.JFrame {
         panel2 = new javax.swing.JPanel();
         lbNCC = new javax.swing.JLabel();
         txtTenNCC = new javax.swing.JTextField();
+        btnReset = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbSanPham = new javax.swing.JTable();
@@ -113,6 +116,16 @@ public class ChiTietCungCap extends javax.swing.JFrame {
         lbNCC.setText("Nhà cung cấp : ");
         panel2.add(lbNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
         panel2.add(txtTenNCC, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 310, 30));
+
+        btnReset.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_reset_25px_1.png"))); // NOI18N
+        btnReset.setText("Làm mới");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+        panel2.add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, 120, 40));
 
         getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 880, 80));
 
@@ -239,32 +252,31 @@ public class ChiTietCungCap extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-       AddChiTietCungCap a = new  AddChiTietCungCap(idNCC);
+       AddChiTietCungCap a = new  AddChiTietCungCap(idNCC, this);
         a.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (tbSanPham.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp muốn sửa");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin chi tiết cung cấp muốn sửa");
         }
         else{
-            int row = tbSanPham.getSelectedRow();
-            int maSanPham = Integer.parseInt(tbSanPham.getValueAt(row,1 ).toString());
-            ChiTietCungCapDTO ct = new ChiTietCungCapDTO();
-            ct.setMaNhaCungCap(idNCC);
-            ct.setMaSanPham(maSanPham);
-            if(ChiTietCungCapDAO.getInstance().delete(ct) == true){
-                JOptionPane.showMessageDialog(this, "Xóa thành công !");
+            int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá thông tin chi tiết cung cấp này không ?", "Xác nhận xoá thông tin chi tiết cung cấp", JOptionPane.YES_NO_OPTION);
+            if (output == JOptionPane.YES_OPTION){
+                int row = tbSanPham.getSelectedRow();
+                int maSanPham = Integer.parseInt(tbSanPham.getValueAt(row,1 ).toString());
+                ChiTietCungCapDTO ct = new ChiTietCungCapDTO();
+                ct.setMaNhaCungCap(idNCC);
+                ct.setMaSanPham(maSanPham);
+                JOptionPane.showMessageDialog(this, ctccBUS.deleteChiTietCungCap(ct));
                 LoadDataToTable(idNCC);
-            } else {
-                JOptionPane.showMessageDialog(this, "Xóa failed !");
             }
         }     
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (tbSanPham.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp muốn sửa");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn chi tiết cung cấp muốn sửa");
         } else {
             int row = tbSanPham.getSelectedRow();
             int maSanPham = Integer.parseInt(tbSanPham.getValueAt(row,1 ).toString());
@@ -280,6 +292,11 @@ public class ChiTietCungCap extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        LoadDataToTable(idNCC);   
+    }//GEN-LAST:event_btnResetActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -291,6 +308,7 @@ public class ChiTietCungCap extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnReset;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
