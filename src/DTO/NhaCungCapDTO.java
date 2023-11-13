@@ -5,19 +5,18 @@ public class NhaCungCapDTO {
     private String tenNhaCungCap;
     private String sdt;
     private String diaChi;
-    private int trangThai;
-    
+
     public NhaCungCapDTO() {
-        
     }
 
-    public NhaCungCapDTO(int maNhaCungCap, String tenNhaCungCap, String sdt, String diaChi, int trangThai) {
+    public NhaCungCapDTO(int maNhaCungCap, String tenNhaCungCap, String sdt, String diaChi) {
         this.maNhaCungCap = maNhaCungCap;
         this.tenNhaCungCap = tenNhaCungCap;
         this.sdt = sdt;
         this.diaChi = diaChi;
-        this.trangThai = trangThai;
-    }
+    }    
+    
+    
 
     public int getMaNhaCungCap() {
         return maNhaCungCap;
@@ -40,9 +39,9 @@ public class NhaCungCapDTO {
     }
 
     public void setSdt(String sdt) {
-        if (sdt.matches("\\d{10}")){
-            this.sdt = sdt;
-        }
+        
+             this.sdt = sdt;
+       
     }
 
     public String getDiaChi() {
@@ -53,11 +52,5 @@ public class NhaCungCapDTO {
         this.diaChi = diaChi;
     }
 
-    public int getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(int trangThai) {
-        this.trangThai = trangThai;
-    }
+    
 }
