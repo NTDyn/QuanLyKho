@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.Account;
+import GUI.*;
 
 public class MainLayout extends javax.swing.JFrame {
     Color DefaultColor, ClickedColor;
@@ -169,10 +170,10 @@ public class MainLayout extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         TaiKhoan = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        TonKho = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         ThongKe = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
+        TonKho = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
         pSettings = new javax.swing.JPanel();
         Account = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -396,30 +397,6 @@ public class MainLayout extends javax.swing.JFrame {
 
         pNav.add(TaiKhoan);
 
-        TonKho.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
-        TonKho.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 24, 1, 1));
-        TonKho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TonKho.setMinimumSize(new java.awt.Dimension(240, 36));
-        TonKho.setName("tonkho"); // NOI18N
-        TonKho.setPreferredSize(new java.awt.Dimension(240, 36));
-        TonKho.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TonKhoMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                TonKhoMousePressed(evt);
-            }
-        });
-        TonKho.setLayout(new java.awt.BorderLayout());
-
-        jLabel10.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-warehouse-25.png"))); // NOI18N
-        jLabel10.setText("Tồn kho");
-        TonKho.add(jLabel10, java.awt.BorderLayout.CENTER);
-
-        pNav.add(TonKho);
-
         ThongKe.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         ThongKe.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 24, 1, 1));
         ThongKe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -443,6 +420,30 @@ public class MainLayout extends javax.swing.JFrame {
         ThongKe.add(jLabel13, java.awt.BorderLayout.CENTER);
 
         pNav.add(ThongKe);
+
+        TonKho.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
+        TonKho.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 24, 1, 1));
+        TonKho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TonKho.setMinimumSize(new java.awt.Dimension(240, 36));
+        TonKho.setName("tonkho"); // NOI18N
+        TonKho.setPreferredSize(new java.awt.Dimension(240, 36));
+        TonKho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TonKhoMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TonKhoMousePressed(evt);
+            }
+        });
+        TonKho.setLayout(new java.awt.BorderLayout());
+
+        jLabel10.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-warehouse-25.png"))); // NOI18N
+        jLabel10.setText("Kho");
+        TonKho.add(jLabel10, java.awt.BorderLayout.CENTER);
+
+        pNav.add(TonKho);
 
         pSidebar.add(pNav, java.awt.BorderLayout.CENTER);
 
@@ -581,10 +582,13 @@ public class MainLayout extends javax.swing.JFrame {
 
     private void TonKhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TonKhoMouseClicked
         // TODO add your handling code here:
-        TonKhoGUI tonKhoForm = new TonKhoGUI();
+//        TonKhoGUI tonKho = new TonKhoGUI();
+//        pMainContent.removeAll();
+//        pMainContent.add(tonKho).setVisible(true);
+        
+        khoGUI khoForm = new khoGUI();
         pMainContent.removeAll();
-        pMainContent.add(tonKhoForm).setVisible(true);
-
+        pMainContent.add(khoForm).setVisible(true);
     }//GEN-LAST:event_TonKhoMouseClicked
 
     private void NhapHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NhapHangMouseClicked
@@ -604,7 +608,7 @@ public class MainLayout extends javax.swing.JFrame {
 
     private void XuatHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_XuatHangMouseClicked
         // TODO add your handling code here:
-        XuatHangForm xuatHangForm = new XuatHangForm(user);
+        XuatHangGUI xuatHangForm = new XuatHangGUI(user);
 //        xh.setNguoiTao(this.currentAcc.getFullName());
         pMainContent.removeAll();
         pMainContent.add(xuatHangForm).setVisible(true);
@@ -651,9 +655,10 @@ public class MainLayout extends javax.swing.JFrame {
 
     private void ThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThongKeMouseClicked
         // TODO add your handling code here:
-        ThongKeForm thongKeForm = new ThongKeForm();
+//        ThongKeForm thongKeForm = new ThongKeForm();
+        ThongKeGUI thongKe = new ThongKeGUI(user);
         pMainContent.removeAll();
-        pMainContent.add(thongKeForm).setVisible(true);
+        pMainContent.add(thongKe).setVisible(true);
     }//GEN-LAST:event_ThongKeMouseClicked
 
     private void ThongKeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThongKeMousePressed

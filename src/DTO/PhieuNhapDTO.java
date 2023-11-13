@@ -3,20 +3,20 @@ package DTO;
 public class PhieuNhapDTO {
     private int maPhieuNhap;
     private String thoiGianTao;
+    private int maKho;
     private String nguoiTao;
-    private int maNhaCungCap;
     private int tongTien;
     private int trangThai;
 
-    public PhieuNhapDTO(int maPhieuNhap, String thoiGianTao, String nguoiTao, int maNhaCungCap, int tongTien, int trangThai) {
+    public PhieuNhapDTO(int maPhieuNhap, String thoiGianTao, int maKho, String nguoiTao, int tongTien, int trangThai) {
         this.maPhieuNhap = maPhieuNhap;
         this.thoiGianTao = thoiGianTao;
+        this.maKho = maKho;
         this.nguoiTao = nguoiTao;
-        this.maNhaCungCap = maNhaCungCap;
         this.tongTien = tongTien;
         this.trangThai = trangThai;
     }
-
+    
     public int getMaPhieuNhap() {
         return maPhieuNhap;
     }
@@ -32,6 +32,14 @@ public class PhieuNhapDTO {
     public void setThoiGianTao(String thoiGianTao) {
         this.thoiGianTao = thoiGianTao;
     }
+    
+    public int getMaKho() {
+        return maKho;
+    }
+
+    public void setMaKho(int maKho) {
+        this.maKho = maKho;
+    }
 
     public String getNguoiTao() {
         return nguoiTao;
@@ -39,14 +47,6 @@ public class PhieuNhapDTO {
 
     public void setNguoiTao(String nguoiTao) {
         this.nguoiTao = nguoiTao;
-    }
-
-    public int getMaNhaCungCap() {
-        return maNhaCungCap;
-    }
-
-    public void setMaNhaCungCap(int maNhaCungCap) {
-        this.maNhaCungCap = maNhaCungCap;
     }
 
     public int getTongTien() {

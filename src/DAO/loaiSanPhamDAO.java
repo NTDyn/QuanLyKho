@@ -5,7 +5,6 @@
 package DAO;
 
 import DTO.loaiSanPhamDTO;
-import DTO.loaiSanPhamDTO;
 import database.JDBCUtil;
 import java.sql.Statement;
 import java.sql.Connection;

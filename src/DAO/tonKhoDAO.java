@@ -5,7 +5,6 @@
 package DAO;
 
 import DTO.tonKhoDTO;
-import com.mysql.cj.xdevapi.PreparableStatement;
 import database.JDBCUtil;
 import java.sql.Statement;
 import java.sql.Connection;

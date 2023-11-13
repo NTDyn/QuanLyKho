@@ -5,12 +5,13 @@
 package view;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import controller.SearchProduct;
+import BUS.SearchProduct;
 import OldDAO.AccountDAO;
 import java.sql.Timestamp;
 import OldDAO.ChiTietPhieuNhapDAO;
 import OldDAO.MayTinhDAO;
-import OldDAO.NhaCungCapDAO;
+import DAO.NhaCungCapDAO;
+import DTO.NhaCungCapDTO;
 import OldDAO.PhieuNhapDAO;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
     private ArrayList<ChiTietPhieu> CTPhieu;
     private ArrayList<ChiTietPhieu> CTPhieuOld;
     private PhieuNhapForm parent;
-    private static final ArrayList<NhaCungCap> arrNcc = NhaCungCapDAO.getInstance().selectAll();
+    private static final ArrayList<NhaCungCapDTO> arrNcc = NhaCungCapDAO.getInstance().selectAll();
 
     public UpdatePhieuNhap(javax.swing.JInternalFrame parent, javax.swing.JFrame owner, boolean modal) throws UnsupportedLookAndFeelException {
         super(owner, modal);
@@ -79,9 +80,9 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         int vitri = -1;
         for (int i = 0; i < arrNcc.size(); i++) {
             cboNhaCungCap.addItem(arrNcc.get(i).getTenNhaCungCap());
-            if (arrNcc.get(i).getMaNhaCungCap().equals(phieunhap.getNhaCungCap())) {
-                vitri = i;
-            }
+//            if (arrNcc.get(i).getMaNhaCungCap().equals(phieunhap.getNhaCungCap())) {
+//                vitri = i;
+//            }
         }
         return vitri;
     }
@@ -394,35 +395,35 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
         // Set so luong san pham cua tung loai ve ban dau
-        if (CTPhieu.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để nhập hàng !","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        } else {
-            for (var ct : CTPhieuOld) {
-                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() - ct.getSoLuong());
-                System.out.println(ct.getSoLuong());
-            }
-            for (var ct : CTPhieu) {
-                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() + ct.getSoLuong());
-                System.out.println(ct.getSoLuong());
-            }
-            // Lay thoi gian hien tai
-            long now = System.currentTimeMillis();
-            Timestamp sqlTimestamp = new Timestamp(now);
-            // Tao doi tuong phieu nhap
-            PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNhaCungCap(), phieunhap.getMaPhieu(), sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
-            try {
-                PhieuNhapDAO.getInstance().update(pn);
-                ChiTietPhieuNhapDAO.getInstance().delete(CTPhieuOld.get(CTPhieuOld.size() - 1));
-                for (var i : CTPhieu) {
-                    ChiTietPhieuNhapDAO.getInstance().insert(i);
-                }
-                JOptionPane.showMessageDialog(this, "Cập nhật thành công !");
-                this.parent.loadDataToTable();
-                this.dispose();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Cập nhật thất bại !","Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+//        if (CTPhieu.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để nhập hàng !","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+//        } else {
+//            for (var ct : CTPhieuOld) {
+//                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() - ct.getSoLuong());
+//                System.out.println(ct.getSoLuong());
+//            }
+//            for (var ct : CTPhieu) {
+//                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() + ct.getSoLuong());
+//                System.out.println(ct.getSoLuong());
+//            }
+//            // Lay thoi gian hien tai
+//            long now = System.currentTimeMillis();
+//            Timestamp sqlTimestamp = new Timestamp(now);
+//            // Tao doi tuong phieu nhap
+//            PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNhaCungCap(), phieunhap.getMaPhieu(), sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
+//            try {
+//                PhieuNhapDAO.getInstance().update(pn);
+//                ChiTietPhieuNhapDAO.getInstance().delete(CTPhieuOld.get(CTPhieuOld.size() - 1));
+//                for (var i : CTPhieu) {
+//                    ChiTietPhieuNhapDAO.getInstance().insert(i);
+//                }
+//                JOptionPane.showMessageDialog(this, "Cập nhật thành công !");
+//                this.parent.loadDataToTable();
+//                this.dispose();
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, "Cập nhật thất bại !","Lỗi", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
     }//GEN-LAST:event_btnNhapHangActionPerformed
 
     private void deleteProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProductActionPerformed

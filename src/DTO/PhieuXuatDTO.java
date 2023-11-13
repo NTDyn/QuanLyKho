@@ -7,6 +7,12 @@ public class PhieuXuatDTO {
     private int tongTien;
     private int trangThai;
 
+    
+    public PhieuXuatDTO() {
+		super();
+	}
+    
+    
     public PhieuXuatDTO(int maPhieuXuat, String thoiGianTao, String nguoiTao, int tongTien, int trangThai) {
         this.maPhieuXuat = maPhieuXuat;
         this.thoiGianTao = thoiGianTao;

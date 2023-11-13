@@ -8,7 +8,7 @@ import BUS.ChiTietQuyenBUS;
 import DTO.ChiTietQuyenDTO;
 import DTO.NguoiDungDTO;
 import controller.BCrypt;
-import controller.SearchAccount;
+import BUS.SearchAccount;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicInternalFrameUI;

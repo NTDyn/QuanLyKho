@@ -5,12 +5,13 @@
 package view;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import controller.SearchProduct;
+import BUS.SearchProduct;
 import OldDAO.AccountDAO;
 import OldDAO.ChiTietPhieuXuatDAO;
 import java.sql.Timestamp;
 import OldDAO.MayTinhDAO;
-import OldDAO.NhaCungCapDAO;
+import DAO.NhaCungCapDAO;
+import DTO.NhaCungCapDTO;
 import OldDAO.PhieuXuatDAO;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
     private ArrayList<ChiTietPhieu> CTPhieu;
     private ArrayList<ChiTietPhieu> CTPhieuOld;
     private PhieuXuatForm parent;
-    private static final ArrayList<NhaCungCap> arrNcc = NhaCungCapDAO.getInstance().selectAll();
 
     public UpdatePhieuXuat(javax.swing.JInternalFrame parent, javax.swing.JFrame owner, boolean modal) throws UnsupportedLookAndFeelException {
         super(owner, modal);

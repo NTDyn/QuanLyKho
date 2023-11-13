@@ -4,6 +4,7 @@
  */
 package OldDAO;
 
+import DAO.DAOInterface;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.sql.PreparedStatement;

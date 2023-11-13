@@ -2,6 +2,7 @@ package DTO;
 
 public class ChiTietPhieuNhapDTO {
     private int maPhieuNhap;
+    private int maNhaCungCap;
     private int maSanPham;
     private int soLuong;
     private int donGia;
@@ -13,12 +14,28 @@ public class ChiTietPhieuNhapDTO {
         this.donGia = donGia;
     }
 
+    public ChiTietPhieuNhapDTO(int maPhieuNhap, int maNhaCungCap, int maSanPham, int soLuong, int donGia) {
+        this.maPhieuNhap = maPhieuNhap;
+        this.maNhaCungCap = maNhaCungCap;
+        this.maSanPham = maSanPham;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+    }
+
     public int getMaPhieuNhap() {
         return maPhieuNhap;
     }
 
     public void setMaPhieuNhap(int maPhieuNhap) {
         this.maPhieuNhap = maPhieuNhap;
+    }
+
+    public int getMaNhaCungCap() {
+        return maNhaCungCap;
+    }
+
+    public void setMaNhaCungCap(int maNhaCungCap) {
+        this.maNhaCungCap = maNhaCungCap;
     }
 
     public int getMaSanPham() {

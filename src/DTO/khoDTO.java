@@ -1,26 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
-/**
- *
- * @author trant
- */
 public class khoDTO {
     private int maKho;
     private String tenKho;
-    private String diaDiem ;
+    private String diaChi;
 
+    
     public khoDTO() {
     }
 
-    
-    public khoDTO(int maKho, String tenKho, String diaDiem) {
+    public khoDTO(int maKho, String tenKho, String diaChi) {
         this.maKho = maKho;
         this.tenKho = tenKho;
-        this.diaDiem = diaDiem;
+        this.diaChi = diaChi;
+      
     }
 
     public int getMaKho() {
@@ -39,13 +32,13 @@ public class khoDTO {
         this.tenKho = tenKho;
     }
 
-    public String getDiaDiem() {
-        return diaDiem;
+    public String getDiaChi() {
+        return diaChi;
     }
 
-    public void setDiaDiem(String diaDiem) {
-        this.diaDiem = diaDiem;
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
     }
 
-    
+
 }

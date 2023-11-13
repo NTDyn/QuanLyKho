@@ -5,12 +5,13 @@
 package view;
 
 import DTO.NguoiDungDTO;
-import controller.SearchProduct;
-import controller.WritePDF;
+import BUS.SearchProduct;
+import helper.WritePDF;
 import OldDAO.AccountDAO;
 import OldDAO.ChiTietPhieuNhapDAO;
 import OldDAO.MayTinhDAO;
-import OldDAO.NhaCungCapDAO;
+import DAO.NhaCungCapDAO;
+import DTO.NhaCungCapDTO;
 import OldDAO.PhieuNhapDAO;
 import OldDAO.PhieuXuatDAO;
 import java.awt.Desktop;
@@ -54,7 +55,7 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
     private ArrayList<MayTinh> allProduct;
     private String MaPhieu;
     private ArrayList<ChiTietPhieu> CTPhieu;
-    private static final ArrayList<NhaCungCap> arrNcc = NhaCungCapDAO.getInstance().selectAll();
+    private static final ArrayList<NhaCungCapDTO> arrNcc = NhaCungCapDAO.getInstance().selectAll();
     private NguoiDungDTO user;
     
     public NhapHangForm(NguoiDungDTO user) {
@@ -91,7 +92,7 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
     }
 
     private void loadNccToComboBox() {
-        for (NhaCungCap i : arrNcc) {
+        for (NhaCungCapDTO i : arrNcc) {
             cboNhaCungCap.addItem(i.getTenNhaCungCap());
         }
     }
@@ -416,43 +417,43 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
 
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
-        if (CTPhieu.size() == 0) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để nhập hàng !", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        } else {
-            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn nhập hàng ?", "Xác nhận nhập hàng", JOptionPane.YES_NO_OPTION);
-            if (check == JOptionPane.YES_OPTION) {
-                // Lay thoi gian hien tai
-                long now = System.currentTimeMillis();
-                Timestamp sqlTimestamp = new Timestamp(now);
-                // Tao doi tuong phieu nhap
-                PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNhaCungCap(), MaPhieu, sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
-                try {
-                    PhieuNhapDAO.getInstance().insert(pn);
-                    MayTinhDAO mtdao = MayTinhDAO.getInstance();
-                    for (var i : CTPhieu) {
-                        ChiTietPhieuNhapDAO.getInstance().insert(i);
-                        mtdao.updateSoLuong(i.getMaMay(), mtdao.selectById(i.getMaMay()).getSoLuong() + i.getSoLuong());
-                    }
-                    JOptionPane.showMessageDialog(this, "Nhập hàng thành công !");
-                    int res = JOptionPane.showConfirmDialog(this, "Bạn có muốn xuất file pdf ?","",JOptionPane.YES_NO_OPTION);
-                    if (res == JOptionPane.YES_OPTION) {
-                        WritePDF writepdf = new WritePDF();
-                        writepdf.writePhieuNhap(MaPhieu);
-                    }
-                    ArrayList<MayTinh> productUp = MayTinhDAO.getInstance().selectAllExist();
-                    txtSoLuong.setText("1");
-                    loadDataToTableProduct(productUp);
-                    DefaultTableModel r = (DefaultTableModel) tblNhapHang.getModel();
-                    r.setRowCount(0);
-                    CTPhieu = new ArrayList<>();
-                    textTongTien.setText("0");
-                    this.MaPhieu = createId(PhieuNhapDAO.getInstance().selectAll());
-                    txtMaPhieu.setText(this.MaPhieu);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi !");
-                }
-            }
-        }
+//        if (CTPhieu.size() == 0) {
+//            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để nhập hàng !", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+//        } else {
+//            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn nhập hàng ?", "Xác nhận nhập hàng", JOptionPane.YES_NO_OPTION);
+//            if (check == JOptionPane.YES_OPTION) {
+//                // Lay thoi gian hien tai
+//                long now = System.currentTimeMillis();
+//                Timestamp sqlTimestamp = new Timestamp(now);
+//                // Tao doi tuong phieu nhap
+//                PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNhaCungCap(), MaPhieu, sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
+//                try {
+//                    PhieuNhapDAO.getInstance().insert(pn);
+//                    MayTinhDAO mtdao = MayTinhDAO.getInstance();
+//                    for (var i : CTPhieu) {
+//                        ChiTietPhieuNhapDAO.getInstance().insert(i);
+//                        mtdao.updateSoLuong(i.getMaMay(), mtdao.selectById(i.getMaMay()).getSoLuong() + i.getSoLuong());
+//                    }
+//                    JOptionPane.showMessageDialog(this, "Nhập hàng thành công !");
+//                    int res = JOptionPane.showConfirmDialog(this, "Bạn có muốn xuất file pdf ?","",JOptionPane.YES_NO_OPTION);
+//                    if (res == JOptionPane.YES_OPTION) {
+//                        WritePDF writepdf = new WritePDF();
+//                        writepdf.writePhieuNhap(MaPhieu);
+//                    }
+//                    ArrayList<MayTinh> productUp = MayTinhDAO.getInstance().selectAllExist();
+//                    txtSoLuong.setText("1");
+//                    loadDataToTableProduct(productUp);
+//                    DefaultTableModel r = (DefaultTableModel) tblNhapHang.getModel();
+//                    r.setRowCount(0);
+//                    CTPhieu = new ArrayList<>();
+//                    textTongTien.setText("0");
+//                    this.MaPhieu = createId(PhieuNhapDAO.getInstance().selectAll());
+//                    txtMaPhieu.setText(this.MaPhieu);
+//                } catch (Exception e) {
+//                    JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi !");
+//                }
+//            }
+//        }
     }//GEN-LAST:event_btnNhapHangActionPerformed
 
     private void addProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductActionPerformed

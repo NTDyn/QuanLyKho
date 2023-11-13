@@ -4,7 +4,7 @@
  */
 package view;
 
-import controller.WritePDF;
+import helper.WritePDF;
 import OldDAO.AccountDAO;
 import OldDAO.ChiTietPhieuXuatDAO;
 import OldDAO.MayTinhDAO;
