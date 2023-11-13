@@ -5,6 +5,8 @@
 package DAO;
 
 import DTO.ChiTietCungCapDTO;
+import DTO.SanPhamDTO;
+import DAO.DAOInterface;
 import database.JDBCUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -93,4 +95,17 @@ public class ChiTietCungCapDAO {
         }
         return ketQua;
     }
+
+    public ArrayList<SanPhamDTO> searchTenSP(String name){
+        ArrayList<SanPhamDTO> ketQua = new ArrayList<>();
+        ArrayList<SanPhamDTO> list = SanPhamDAO.getInstance().getlistProduct();
+         for(var sp : list){
+             if(sp.getTenSanPham().toLowerCase().contains(name.toLowerCase())){
+                ketQua.add(sp);
+            }
+         }
+         return ketQua;
+    }
+    
+    
 }
