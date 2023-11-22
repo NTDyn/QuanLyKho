@@ -79,25 +79,16 @@ public class NhaCungCapDAO{
         boolean ketQua = false;
         try {
             java.sql.Connection con = JDBCUtil.getConnection();
-            // Kiểm tra xem nhà cung cấp có thông tin chi tiết cung cấp hay không
-            String checkSql = "SELECT COUNT(*) FROM chitietcungcap WHERE manhacungcap = ?";
-            PreparedStatement checkStmt = con.prepareStatement(checkSql);
-            checkStmt.setInt(1, t.getMaNhaCungCap());
-            ResultSet rs = checkStmt.executeQuery();
-            rs.next();
-            int count = rs.getInt(1);
-
-            if (count == 0) {
-                // Đặt trạng thái của nhà cung cấp thành 0 để đánh dấu là đã bị xóa
-                String deleteSql = "UPDATE nhacungcap SET trangthai = 0 WHERE manhacungcap = ? and trangthai = 1";
-                PreparedStatement deleteStmt = con.prepareStatement(deleteSql);
-                deleteStmt.setInt(1, t.getMaNhaCungCap());
-                if (deleteStmt.executeUpdate() >= 1) {
-                    ketQua = true;
-                }
+            String sql = "UPDATE NhaCungCap SET trangthai = 0 WHERE maNhaCungCap=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+//            pst.setString(1, t.getMaNhaCungCap());
+            pst.setInt(1, t.getMaNhaCungCap());
+            if(pst.executeUpdate() >= 1){
+                ketQua = true;
             }
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {
+            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
